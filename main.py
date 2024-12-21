@@ -1,4 +1,6 @@
-#pip install playsound
+# source myenv/bin/activate
+
+import os
 try:
     from playsound import playsound
 except ImportError:
@@ -16,7 +18,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         command = post_data.decode()
 
         if command == "play":
-            playsound('shutup.mp3')
+            os.system('/usr/bin/aplay /home/simon/server/HoldKaeftServer/shutup.wav')
 
 
         #Svarer tilbage
@@ -27,11 +29,11 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(response.encode())
 
 #Start serveren
-def run(server_class=HTTPServer, handler_class=RequestHandler, port=80):
+def run(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print('Starting server...')
     httpd.serve_forever()
 
 if __name__ == '__main__':
-    run()
+   run()
